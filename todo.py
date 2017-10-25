@@ -18,9 +18,7 @@ class ToDo():
     def set_proper_length_of_the_string(cls, string, proper_length=20):
         """Cut string if it's too long. Returns string."""
         if cls.check_if_string_has_proper_length(string, proper_length) is False:
-            index_modifier = 1  # for correct indexing in cutting string process
-            cut_index = proper_length + index_modifier
-            modified_string = string[:cut_index]
+            modified_string = string[:proper_length]
             return modified_string
         return string
 
@@ -30,12 +28,30 @@ class ToDo():
         name: string, max 20 characters
         description: string, max 150 characters
         is_done: bool, False by default
+        id: int
         """
         self.name = self.set_proper_length_of_the_string(name, proper_length=20)
         self.description = self.set_proper_length_of_the_string(description, proper_length=150)
         self.is_done = False
-        self.id = str(ToDo.created_items_counter) + ". task"
+        self.id = ToDo.created_items_counter
         ToDo.created_items_counter += 1
+
+    def __str__(self):
+        return "id: " + str(self.id) + ", name: " + self.name + "\n" + "description: " + self.description
 
 
 task = ToDo("hjgfhajgsdasdashgdfashjgdfasdsahdgfgasdgfasdh12345", "opis")
+# task1 = ToDo("kawa", "robienie kawy,     robienie kawy,     robienie kawy,     \
+#                 robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     \
+#                 robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     \
+#                 robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     \
+#                 robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     \
+#                 mammmmmmma")
+# print(task.name)
+# print(len(task.name))
+# print(task.description)
+# print(task.id)
+#
+# print(task)
+# print(task1)
+# print(len(task1.description))
