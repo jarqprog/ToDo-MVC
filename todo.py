@@ -37,7 +37,7 @@ class ToDo():
         ToDo.created_items_counter += 1
 
     def __str__(self):
-        return "id: " + str(self.id) + ", name: " + self.name + "\n" + "description: " + self.description
+        return "id: " + str(self.id) + ", name: " + self.name + "description: " + self.description
 
     # def remove_me(self):
     #     __del__(self)
