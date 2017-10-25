@@ -1,35 +1,31 @@
 """Contains ToDoList class. In MVC structure it's Model."""
 
 from todo import ToDo
+from mytools import display_table_from_given_lists
 
 
 class ToDoList():
     """Items ToDo list class. Contains all tasks (ToDo objects) and methods to manage them."""
 
     def __init__(self):
-        self.my_items = []  # contains items ToDo
+        self.my_tasks = []  # contains tasks (ToDo objects)
 
-    def add_item(self, name, description):
-        item_to_add = ToDo(name, description)
-        self.my_items.append(item_to_add)
+    def add_task(self, name, description):
+        task_to_add = ToDo(name, description)
+        self.my_tasks.append(task_to_add)
+
+    def remove_task(self, id):
+        del self.my_tasks[int(id)]
 
     def __str__(self):
-        """Return content of items."""
-        in_head_1 = "lp:"
-        lenght_in_head_1 = len(in_head_1)
-        in_head_2 = "item todo:"
-        lenght_in_head_2 = len(in_head_2) + 40
-    
-        to_display = "{} {} \n".format(in_head_1, in_head_2)
-        for number, item in enumerate(self.my_items):
-            to_display += "{:02d} {} \n".format(number, str(item))
-        return to_display
+        """Return content of my_items in string form (to display)."""
+        head = ["id", "name", "description"]
+        body = [[task.name, task.description] for task in self.my_tasks]
+        return display_table_from_given_lists(head, body, bar_mark='-')
 
 
 my_list = ToDoList()
-my_list.add_item("kawa", "kawa jest do zrobienia")
-my_list.add_item("herbatka", "herbatka jest do zrobienia")
-my_list.add_item("woda", "woda jest do nalania")
-
+my_list.add_task("kawa", "kawa jest do zrobienia")
+my_list.add_task("herbatka", "herbatka jest do zrobienia")
+my_list.add_task("woda", "woda jest do nalania")
 print(my_list)
-# print("%s, %s" % ("lp:", "item todo:".rjust(10)))
