@@ -15,6 +15,10 @@ class ToDoList():
         self.my_tasks.append(task_to_add)
 
     def remove_task(self, id):
+        try:
+            id = abs(int(id))
+        except ValueError:
+            raise ValueError("id should be a number")
         del self.my_tasks[int(id)]
 
     def __str__(self):
@@ -28,4 +32,6 @@ my_list = ToDoList()
 my_list.add_task("kawa", "kawa jest do zrobienia")
 my_list.add_task("herbatka", "herbatka jest do zrobienia")
 my_list.add_task("woda", "woda jest do nalania")
+print(my_list)
+my_list.remove_task("-1")
 print(my_list)
