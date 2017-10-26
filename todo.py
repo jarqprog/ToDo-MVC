@@ -1,4 +1,4 @@
-"""Contain ToDo items class. In MVC it's part of Model."""
+"""Contain ToDo items class. In MVC structure it's component of Model."""
 
 
 class ToDo():

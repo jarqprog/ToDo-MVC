@@ -1,4 +1,4 @@
-"""Controller in MVC."""
+"""Controller in MVC structure."""
 
 from user import User
 from view import View
@@ -18,37 +18,38 @@ class Controller():
                     "change task description",
                     "exit program"]
 
-    view = View()
-
     def __init__(self):
-        invitation = "Welcome in ToDo program. Please, enter Your name:"
-        self.view.display_simple_text(invitation)
+        self.view = View()
+        self.view.display_intro()
+        self.view.text = "Welcome in ToDo program. Please, enter Your name:"
+        self.view.display_text()
         name = input()
         self.user = User(name)
+        self.view.name = self.user.name
+        self.view.menu_choices = self.menu_choices
 
     def menu_loop(self):
-        __user = str(self.user)
-        head = __user + ", what do you want to do?"
+        self.view.text = ", what do you want to do?"
+        self.view.display_name_and_text()
         correct_choices = [str(num) for num in range(len(self.menu_choices))]
-        while True:
-            self.view.display_menu_choices(head, self.menu_choices)
-            text = "\n\n\n"
-            self.view.display_simple_text(text)
-            self.set_choice(correct_choices, set_value=False)
-            clear_screen()
-            if self.choice == "1":
-                self.view.display_simple_text(self.user.display_my_tasks())
-            elif self.choice == "2":
-                self.add_new_task(__user)
-            elif self.choice == "3":
-                self.add_new_task(__user)
-            elif self.choice == "4":
-                self.mark_task_as_done(__user)
-            elif self.choice == "5":
-                self.mark_task_as_todo(__user)
-            elif self.choice == "0":
-                self.exit_program()
-            pause()
+        # while True:
+        #     self.view.display_menu_choices()
+        #     self.view.display_custom_text("\n\n\n")
+        #     self.set_choice(correct_choices, set_value=False)
+        #     clear_screen()
+        #     if self.choice == "1":
+        #         self.view.display_simple_text(self.user.display_my_tasks())
+        #     elif self.choice == "2":
+        #         self.add_new_task()
+        #     elif self.choice == "3":
+        #         self.add_new_task()
+        #     elif self.choice == "4":
+        #         self.mark_task_as_done()
+        #     elif self.choice == "5":
+        #         self.mark_task_as_todo()
+        #     elif self.choice == "0":
+        #         self.exit_program()
+        #     pause()
 
     # def remove_task(self, __user):
     #     text = __user + ", please type task's name (max 20 chars)."
@@ -144,4 +145,3 @@ class Controller():
                         self.view.display_simple_text(invalid_info)
                 else:
                     self.view.display_simple_text(invalid_info)
-

@@ -2,7 +2,6 @@ from controller import Controller
 
 
 def main():
-    Controller.view.display_intro()
     controller = Controller()
     controller.menu_loop()
 
