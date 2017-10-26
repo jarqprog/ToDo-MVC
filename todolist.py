@@ -27,7 +27,7 @@ class ToDoList():
         self.my_tasks[uid].mark_me_as_done()
 
     def mark_task_as_todo(self, uid):
-        self.my_tasks[uid].mark_task_as_todo()
+        self.my_tasks[uid].mark_me_as_todo()
 
     def display_task_name(self, uid):
         """Return string."""

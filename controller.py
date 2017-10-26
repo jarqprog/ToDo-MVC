@@ -3,87 +3,112 @@
 from user import User
 from view import View
 from mytools import pause
+from mytools import clear_screen
 
 
 class Controller():
 
-    view = View()
     menu_choices = ["display tasks",
-                    "display task description",
                     "add task",
                     "remove task",
                     "mark task as done",
                     "mark task as todo",
+                    "display task description",
                     "change task name",
                     "change task description",
                     "exit program"]
 
-    invitation = "Welcome in ToDo program. Please, enter Your name:"
-    choice = ""
-
-    @classmethod
-    def set_user(cls):
-        cls.view.display_simple_text(cls.invitation)
-        name = input()
-        cls.user = User(name)
+    view = View()
 
     def __init__(self):
-        self.set_user()
+        invitation = "Welcome in ToDo program. Please, enter Your name:"
+        self.view.display_simple_text(invitation)
+        name = input()
+        self.user = User(name)
 
     def menu_loop(self):
-        head = self.user + ", what do you want to do?"
-        correct_choices = [str(x) for x in range(len(self.menu_choices))]
+        __user = str(self.user)
+        head = __user + ", what do you want to do?"
+        correct_choices = [str(num) for num in range(len(self.menu_choices))]
         while True:
             self.view.display_menu_choices(head, self.menu_choices)
+            text = "\n\n\n"
+            self.view.display_simple_text(text)
             self.set_choice(correct_choices, set_value=False)
-            # if self.choice == "1":
-            #     self.display_tasks()
-            # elif self.choice == "3":
-            #     self.add_new_task()
-            # elif self.choice == "5":
-            #     self.mark_task_as_done()
+            clear_screen()
+            if self.choice == "1":
+                self.view.display_simple_text(self.user.display_my_tasks())
+            elif self.choice == "2":
+                self.add_new_task(__user)
+            elif self.choice == "3":
+                self.add_new_task(__user)
+            elif self.choice == "4":
+                self.mark_task_as_done(__user)
+            elif self.choice == "5":
+                self.mark_task_as_todo(__user)
             elif self.choice == "0":
                 self.exit_program()
+            pause()
 
-    # def add_new_task(self):
-    #     text = self.user_name + ", please type task's name (max 20 chars)."
+    # def remove_task(self, __user):
+    #     text = __user + ", please type task's name (max 20 chars)."
     #     self.view.display_simple_text(text)
     #     name = input()
-    #     text = self.user_name + ", please type task's description (max 150 chars)."
+    #     text = __user + ", please type task's description (max 150 chars)."
     #     self.view.display_simple_text(text)
     #     description = input()
-    #     self.mytodo.add_task(name, description)
+    #     self.user.tasks.add_task(name, description)
     #     lastly_added = -1  # last position (index) in list
-    #     text = "Added new task:\n" + str(self.mytodo.my_tasks[lastly_added])
+    #     text = "Added new task:\n" + str(self.user.tasks.my_tasks[lastly_added])
     #     self.view.display_simple_text(text)
-    #     pause()
 
-    # def mark_task_as_done(self):
-    #     if self.mytodo.my_tasks:
-    #         self.view.display_tasks_in_table_format(self.mytodo)
-    #         text = self.user_name + ", please choose task (by id) to mark as done:"
-    #         self.view.display_simple_text(text)
-    #         correct_choices = [str(x) for x in range(len(self.mytodo.my_tasks))]
-    #         self.set_choice(correct_choices, set_value=False)
-    #         index = int(self.choice)
-    #         self.mytodo.mark_task_as_done(index)
-    #         text = "Done, updated task data:\n"
-    #         self.view.display_simple_text(text + str(self.mytodo.my_tasks[index]))
-    #     else:
-    #         text = "There's no task to display, You should create a task first."
-    #         self.view.display_simple_text(text)
-    #     pause()
+    def add_new_task(self, __user):
+        text = __user + ", please type task's name (max 20 chars)."
+        self.view.display_simple_text(text)
+        name = input()
+        text = __user + ", please type task's description (max 150 chars)."
+        self.view.display_simple_text(text)
+        description = input()
+        self.user.tasks.add_task(name, description)
+        lastly_added = -1  # last position (index) in list
+        text = "Added new task:\n" + str(self.user.tasks.my_tasks[lastly_added])
+        self.view.display_simple_text(text)
 
-    # def display_tasks(self):
-    #     if self.mytodo.my_tasks:
-    #         self.view.display_tasks_in_table_format(self.mytodo)
-    #     else:
-    #         text = "There's no task to display, You should create a task first."
-    #         self.view.display_simple_text(text)
-    #     pause()
+    def mark_task_as_done(self, __user):
+        if self.user.tasks.my_tasks:
+            task_id = self.take_task_id_from_user(__user)
+            self.user.tasks.mark_task_as_done(task_id)
+            self.display_info_about_completion_of_the_action(task_id)
+        else:
+            self.display_info_about_empty_tasks_list()
+
+    def mark_task_as_todo(self, __user):
+        if self.user.tasks.my_tasks:
+            task_id = self.take_task_id_from_user(__user)
+            self.user.tasks.mark_task_as_todo(task_id)
+            self.display_info_about_completion_of_the_action(task_id)
+        else:
+            self.display_info_about_empty_tasks_list()
+
+    def take_task_id_from_user(self, __user):
+        self.view.display_simple_text(self.user.display_my_tasks())
+        text = __user + ", please choose task (by id number):"
+        self.view.display_simple_text(text)
+        correct_choices = [str(x) for x in range(len(self.user.tasks.my_tasks))]
+        self.set_choice(correct_choices, set_value=False)
+        task_id = int(self.choice)
+        return task_id
+
+    def display_info_about_completion_of_the_action(self, task_id):
+        text = "Done, updated task data:\n"
+        self.view.display_simple_text(text + str(self.user.tasks.my_tasks[task_id]))
+
+    def display_info_about_empty_tasks_list(self):
+        text = "There's no task to display, You should create a task first."
+        self.view.display_simple_text(text)
 
     def exit_program(self):
-        self.view.say_goodbye(self.user.name)
+        self.view.say_goodbye(str(self.user.name))
         exit()
 
     def set_choice(self, correct_choices=None, set_value=False):
@@ -120,13 +145,3 @@ class Controller():
                 else:
                     self.view.display_simple_text(invalid_info)
 
-    # def manage_main_menu(self):
-    #     """Display menu (main options). User make's a choice."""
-    #     self.display_menu_choices()  # display main menu
-    #
-    #     self.set_user_choice(correct_choices)
-#
-# class User(Controller):
-#
-#     def __init__(self, name):
-#         self.name = name
