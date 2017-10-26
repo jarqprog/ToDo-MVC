@@ -2,6 +2,7 @@
 
 from todolist import ToDoList
 from view import View
+from mytools import pause
 
 
 class Controller():
@@ -43,9 +44,16 @@ class Controller():
                 self.exit_program()
 
     def add_new_task(self):
-        name = input('podaj nazwę')
-        description = input('podaj opis')
+        text = self.user_name + ", please type task's name (max 20 chars)."
+        self.view.display_simple_text(text)
+        name = input()
+        text = self.user_name + ", please type task's description (max 150 chars)."
+        self.view.display_simple_text(text)
+        description = input()
         self.mytodo.add_task(name, description)
+        text = "Added new task: " + str(self.mytodo.my_tasks[-1])
+        self.view.display_simple_text(text)
+        pause()
 
     def mark_task_as_done(self):
         # view, input id
@@ -56,7 +64,12 @@ class Controller():
     #     self.my_tasks[id].mark_me_as_done()
 
     def display_tasks(self):
-        self.view.display_tasks_in_table_format(self.mytodo)
+        if self.mytodo.my_tasks:
+            self.view.display_tasks_in_table_format(self.mytodo)
+        else:
+            text = "There's no task to display, You should create a task first."
+            self.view.display_simple_text(text)
+            pause()
 
     def exit_program(self):
         self.view.say_goodbye(self.user_name)
