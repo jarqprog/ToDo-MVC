@@ -15,34 +15,34 @@ class User():
     def add_task(self, name, description):
         self.tasks.add_task(name, description)
 
-    def remove_task(self, uid):
-        del self.tasks.my_tasks[uid]
+    def remove_task(self, task_id):
+        del self.tasks.my_tasks[task_id]
 
-    def change_task_name(self, uid, new_name):
-        self.tasks.my_tasks[uid].set_new_name(new_name)
+    def change_task_name(self, task_id, new_name):
+        self.tasks.my_tasks[task_id].set_new_name(new_name)
 
-    def change_task_description(self, uid, new_description):
-        self.tasks.my_tasks[uid].set_new_description(new_description)
+    def change_task_description(self, task_id, new_description):
+        self.tasks.my_tasks[task_id].set_new_description(new_description)
 
-    def mark_task_as_done(self, uid):
-        self.tasks.my_tasks[uid].mark_me_as_done()
+    def mark_task_as_done(self, task_id):
+        self.tasks.my_tasks[task_id].mark_me_as_done()
 
-    def mark_task_as_todo(self, uid):
-        self.tasks.my_tasks[uid].mark_me_as_todo()
+    def mark_task_as_todo(self, task_id):
+        self.tasks.my_tasks[task_id].mark_me_as_todo()
 
-    def get_task_name(self, uid):
+    def get_task_name(self, task_id):
         """Return string."""
-        return self.tasks.my_tasks[uid].name
+        return self.tasks.my_tasks[task_id].name
 
-    def get_task_full_description(self, uid):
+    def get_task_full_description(self, task_id):
         """Return string."""
-        return str(self.tasks.my_tasks[uid].name + ":\n" + self.tasks.my_tasks[uid].description)
+        return str(self.tasks.my_tasks[task_id].name + ":\n" + self.tasks.my_tasks[task_id].description)
 
     def get_task_id_by_name(self, name):
         """Return string."""
-        for uid, task in enumerate(self.tasks.my_tasks):
+        for task_id, task in enumerate(self.tasks.my_tasks):
             if task.name == name:
-                return str(uid)
+                return str(task_id)
         return name + " - there's no such name in tasks list, type correct name..."
 
     def get_all_my_tasks(self):
@@ -51,3 +51,6 @@ class User():
             return str(self.tasks)
         else:
             return "Don't have any task yet.."
+
+    def remove_all_tasks(self):
+        del self.tasks.my_tasks[:]

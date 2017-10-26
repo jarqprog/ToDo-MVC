@@ -109,7 +109,7 @@ def display_text_with_asci_graphics(text_1=None, text_2=None, repeat=9):
     clear_screen()
     animate_string(string=text_1)
     for counter in range(repeat, -1, -1):
-        string = "{: >18}".format(
+        string = "{: >25}".format(
                                     str(counter) +
                                     (".."*counter) + "\n")
         animate_string(string=string)

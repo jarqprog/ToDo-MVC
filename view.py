@@ -9,15 +9,15 @@ class View():
     def __init__(self):
         self.name = ""
         self.text = ""
-        self.text_1 = "\nLoading Program...\n"
-        self.text_2 = "Jupi! Program loaded ^o^\n"
+        self.intro_text_1 = "\nLoading Program...\n\n"
+        self.intro_text_2 = "\nJupi! Program loaded ^o^\n"
         self.menu_choices = []
         self.excluded = "exit program"
 
     def display_intro(self):
         """Display simple intro."""
         mytools.clear_screen()
-        mytools.display_text_with_asci_graphics(self.text_1, self.text_2)
+        mytools.display_text_with_asci_graphics(self.intro_text_1, self.intro_text_2)
         mytools.pause()
 
     def display_text(self):
