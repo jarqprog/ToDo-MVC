@@ -43,6 +43,9 @@ class ToDo():
     def mark_me_as_done(self):
         self.is_done = True
 
+    def mark_me_as_todo(self):
+        self.is_done = False
+
 
 task = ToDo("hjgfhajgsdasdashgdfashjgdfasdsahdgfgasdgfasdh12345", "opis")
 # task1 = ToDo("kawa", "robienie kawy,     robienie kawy,     robienie kawy,     \

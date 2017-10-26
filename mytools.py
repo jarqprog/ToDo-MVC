@@ -35,7 +35,6 @@ def display_table_from_given_lists(head, body, bar_mark='-'):
     01      apple   nice fruit          # body elements (list of lists), e.g. body = [["apple", "nice fruit"], [...]]
     02      orange  tasty thing         # id numbers from enumerate list elements in loop
     ---------------------------------------
-    list (head, body) elements: string type
     """
     # check if arguments are correct
     length_modifier = 1  # head should have 1 element more (e.g. 'id')
@@ -77,7 +76,7 @@ def display_table_from_given_lists(head, body, bar_mark='-'):
     return output_string
 
 
-def animate_string(speed=0.005, string=None):
+def animate_string(speed=0.0005, string=None):
     """
     Display string using pseudo-animating technique.
 
@@ -101,20 +100,20 @@ def display_text_with_asci_graphics(text_1=None, text_2=None, repeat=9):
     repeat: integer (number of repeats in loop)
 
     Sample output:
-    Loading Geometry Program... (text_1)
+    Loading program... (text_1)
     ***************************2....
     *****************************1..
     *******************************0
-    Geometry Program loaded ^o^ (text_2)
+    Program loaded ^o^ (text_2)
     """
     clear_screen()
-    animate_string(text_1)
+    animate_string(string=text_1)
     for counter in range(repeat, -1, -1):
         string = "{:*>80}".format(
                                     str(counter) +
                                     (".."*counter) + "\n")
         animate_string(string=string)
-    animate_string(text_2)
+    animate_string(string=text_2)
 
 
 def clear_screen():
@@ -125,7 +124,7 @@ def clear_screen():
 def pause():
     """Stop program action until user will press any key."""
     print('\n\npress any key..\n')
-    Interface.getch()
+    getch()
 
 
 

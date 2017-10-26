@@ -26,6 +26,9 @@ class ToDoList():
     def mark_task_as_done(self, id):
         self.my_tasks[id].mark_me_as_done()
 
+    def mark_task_as_todo(self, id):
+        self.my_tasks[id].mark_task_as_todo()
+
     def display_task_name(self, id):
         """Return string."""
         return self.my_tasks[id].name
@@ -49,8 +52,8 @@ class ToDoList():
                 [task.name, str(task.is_done), str(task.description[:description_length]+"...")]
                 for task in self.my_tasks]
         return display_table_from_given_lists(head, body, bar_mark='-')
-
-
+#
+#
 # my_list = ToDoList()
 # my_list.add_task("kawa", "kawa jest do zrobienia")
 # my_list.add_task("herbatka", "herbatka jest do zrobienia")
