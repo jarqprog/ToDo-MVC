@@ -47,10 +47,8 @@ class View():
         if string is None:
             string = ("\nGoodbye, " + name + "!\n\n\nExit program...\n\n")
         mytools.animate_string(string=string)
-        mytools.pause()
 
     @staticmethod
     def display_tasks_in_table_format(tasks):
         mytools.clear_screen()
         print(tasks)
-        mytools.pause()
