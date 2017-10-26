@@ -14,34 +14,34 @@ class ToDoList():
         task_to_add = ToDo(name, description)
         self.my_tasks.append(task_to_add)
 
-    def remove_task(self, id):
-        del self.my_tasks[id]
+    def remove_task(self, uid):
+        del self.my_tasks[uid]
 
-    def change_task_name(self, id, new_name):
-        self.my_tasks[id].change_my_name(new_name)
+    def change_task_name(self, uid, new_name):
+        self.my_tasks[uid].set_new_name(new_name)
 
-    def change_task_description(self, id, new_description):
-        self.my_tasks[id].change_my_description(new_description)
+    def change_task_description(self, uid, new_description):
+        self.my_tasks[uid].set_new_description(new_description)
 
-    def mark_task_as_done(self, id):
-        self.my_tasks[id].mark_me_as_done()
+    def mark_task_as_done(self, uid):
+        self.my_tasks[uid].mark_me_as_done()
 
-    def mark_task_as_todo(self, id):
-        self.my_tasks[id].mark_task_as_todo()
+    def mark_task_as_todo(self, uid):
+        self.my_tasks[uid].mark_task_as_todo()
 
-    def display_task_name(self, id):
+    def display_task_name(self, uid):
         """Return string."""
-        return self.my_tasks[id].name
+        return self.my_tasks[uid].name
 
-    def display_task_full_description(self, id):
+    def display_task_full_description(self, uid):
         """Return string."""
-        return str(self.my_tasks[id].name + ":\n" + self.my_tasks[id].description)
+        return str(self.my_tasks[uid].name + ":\n" + self.my_tasks[uid].description)
 
     def get_task_id_by_name(self, name):
         """Return string."""
-        for id, task in enumerate(self.my_tasks):
+        for uid, task in enumerate(self.my_tasks):
             if task.name == name:
-                return str(id)
+                return str(uid)
         return name + " - there's no such name in tasks list, type correct name..."
 
     def __str__(self):

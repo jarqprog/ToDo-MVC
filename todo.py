@@ -1,4 +1,4 @@
-"""Contain ToDo items class."""
+"""Contain ToDo items class. In MVC it's part of Model."""
 
 
 class ToDo():
@@ -32,12 +32,12 @@ class ToDo():
         self.is_done = False
 
     def __str__(self):
-        return "name: " + self.name + ", description: " + self.description
+        return "name: " + self.name + ", is done: " + str(self.is_done) + ", description: " + self.description
 
-    def change_my_name(self, new_name):
+    def set_new_name(self, new_name):
         self.name = self.set_proper_length_of_the_string(new_name, proper_length=20)
 
-    def change_my_description(self, new_description):
+    def set_new_description(self, new_description):
         self.description = self.set_proper_length_of_the_string(new_description, proper_length=150)
 
     def mark_me_as_done(self):
@@ -45,20 +45,3 @@ class ToDo():
 
     def mark_me_as_todo(self):
         self.is_done = False
-
-#
-# task = ToDo("hjgfhajgsdasdashgdfashjgdfasdsahdgfgasdgfasdh12345", "opis")
-# task1 = ToDo("kawa", "robienie kawy,     robienie kawy,     robienie kawy,     \
-#                 robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     \
-#                 robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     \
-#                 robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     \
-#                 robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     robienie kawy,     \
-#                 mammmmmmma")
-# print(task.name)
-# print(len(task.name))
-# print(task.description)
-# print(task.id)
-#
-# print(task)
-# print(task1)
-# print(len(task1.description))
