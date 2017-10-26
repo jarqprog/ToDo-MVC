@@ -27,12 +27,15 @@ class ToDoList():
         self.my_tasks[id].mark_me_as_done()
 
     def display_task_name(self, id):
+        """Return string."""
         return self.my_tasks[id].name
 
     def display_task_full_description(self, id):
+        """Return string."""
         return str(self.my_tasks[id].name + ":\n" + self.my_tasks[id].description)
 
     def get_task_id_by_name(self, name):
+        """Return string."""
         for id, task in enumerate(self.my_tasks):
             if task.name == name:
                 return str(id)
@@ -48,17 +51,18 @@ class ToDoList():
         return display_table_from_given_lists(head, body, bar_mark='-')
 
 
-my_list = ToDoList()
-my_list.add_task("kawa", "kawa jest do zrobienia")
-my_list.add_task("herbatka", "herbatka jest do zrobienia")
-my_list.add_task("woda", "woda jest do nalania")
-print(my_list)
-my_list.remove_task(1)
-print(my_list)
-my_list.change_task_name(0, "coca cola")
-my_list.mark_task_as_done(0)
-my_list.change_task_description(1, "jest bardzo zdrowa i wyjątkowo smaczna, szczególnie ciepła, ponieważ rozgrzewa ciało i umysł jest bardzo zdrowa i wyjątkowo smaczna, szczególnie ciepła, ponieważ rozgrzewa ciało i umysł jest bardzo zdrowa i wyjątkowo smaczna, szczególnie ciepła, ponieważ rozgrzewa ciało i umysł jest bardzo zdrowa i wyjątkowo smaczna, szczególnie ciepła, ponieważ rozgrzewa ciało i umysł")
-print(my_list)
-print(my_list.display_task_name(1))
-print(my_list.display_task_full_description(1))
-print(my_list.get_task_id_by_name("pepsi cola"))
+# my_list = ToDoList()
+# my_list.add_task("kawa", "kawa jest do zrobienia")
+# my_list.add_task("herbatka", "herbatka jest do zrobienia")
+# my_list.add_task("woda", "woda jest do nalania")
+# print(my_list)
+# my_list.remove_task(1)
+# print(my_list)
+# my_list.change_task_name(0, "coca cola")
+# my_list.mark_task_as_done(0)
+# my_list.change_task_description(1, "jest bardzo zdrowa i wyjątkowo smaczna, szczególnie ciepła, ponieważ rozgrzewa ciało i umysł jest bardzo zdrowa i wyjątkowo smaczna, szczególnie ciepła, ponieważ rozgrzewa ciało i umysł jest bardzo zdrowa i wyjątkowo smaczna, szczególnie ciepła, ponieważ rozgrzewa ciało i umysł jest bardzo zdrowa i wyjątkowo smaczna, szczególnie ciepła, ponieważ rozgrzewa ciało i umysł")
+# print(my_list)
+# print(my_list.display_task_name(1))
+# print(my_list.display_task_full_description(1))
+# print(my_list.get_task_id_by_name("pepsi cola"))
+# print(my_list.my_tasks[0])

@@ -1,5 +1,28 @@
 """Module conatains varied helper functions."""
 
+import time
+import sys
+import os
+import random
+
+
+# import getch (avoid problem with windows/ubuntu):
+try:
+    from msvcrt import getwch as getch
+
+except ImportError:
+    def getch():
+        import tty
+        import termios
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+
 
 def display_table_from_given_lists(head, body, bar_mark='-'):
     """
@@ -52,6 +75,58 @@ def display_table_from_given_lists(head, body, bar_mark='-'):
             output_string += "".join(element).ljust(longest_elements[index]) + gap
         output_string += "\n" + table_bar + "\n"
     return output_string
+
+
+def animate_string(speed=0.005, string=None):
+    """
+    Display string using pseudo-animating technique.
+
+    speed: determine "animating" speed (float), default: 0.005
+    string: string text to display
+    """
+    if string is None:
+        string = "\n\nLoading program...\n\n"
+    for char in string:
+        sys.stdout.write("%s" % char)
+        sys.stdout.flush()
+        time.sleep(speed)
+
+
+def display_text_with_asci_graphics(text_1=None, text_2=None, repeat=9):
+    """
+    Display text and asci graphisc in pseudo-animating form.
+
+    Parameters:
+    text_1, text_2: string (text to display)
+    repeat: integer (number of repeats in loop)
+
+    Sample output:
+    Loading Geometry Program... (text_1)
+    ***************************2....
+    *****************************1..
+    *******************************0
+    Geometry Program loaded ^o^ (text_2)
+    """
+    clear_screen()
+    animate_string(text_1)
+    for counter in range(repeat, -1, -1):
+        string = "{:*>80}".format(
+                                    str(counter) +
+                                    (".."*counter) + "\n")
+        animate_string(string=string)
+    animate_string(text_2)
+
+
+def clear_screen():
+    """Clear screen - universal for ubuntu/windows platform."""
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+def pause():
+    """Stop program action until user will press any key."""
+    print('\n\npress any key..\n')
+    Interface.getch()
+
 
 
 # head = ['id', 'first', 'last']
