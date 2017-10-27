@@ -125,10 +125,3 @@ def pause():
     """Stop program action until user will press any key."""
     print('\n\npress any key..\n')
     getch()
-
-
-
-# head = ['id', 'first', 'last']
-# body = [['Jarek', 'Kucharczyk'], ['Jelenka', 'Kucharczyk']]
-# lista = display_table_from_given_lists(head, body)
-# print(lista)

@@ -4,9 +4,14 @@ from user import User
 from view import View
 from mytools import pause
 from mytools import clear_screen
+import pickle
 
 
 class Controller():
+
+    init_choices = ["Start with new profile",
+                    "Load profile",
+                    "About program"]
 
     menu_choices = ["display tasks",
                     "add task",
@@ -17,26 +22,72 @@ class Controller():
                     "change task name",
                     "change task description",
                     "remove all tasks",
+                    "get task id by task name",
+                    "save my profile",
                     "exit program"]
 
+    view = View()
+
+    @classmethod
+    def set_choice(cls, correct_choices):
+        """
+        Support User inputs.
+
+        When correct_choices is specified (list with available choices),
+        check if User input is in list, set user choice from correct input (string type).
+        """
+        while True:
+            cls.choice = input().upper()
+            if correct_choices:
+                if cls.choice in correct_choices:
+                    break
+            else:
+                invalid_info = "incorrect choice, try again.."
+                cls.view.display_custom_text(invalid_info)
+
+    @classmethod
+    def load_user_profile(cls):
+        with open('my_profile', 'rb') as input:
+            user = pickle.load(input)
+            return user
+
     def __init__(self):
-        self.view = View()
         self.view.display_intro()
-        self.view.text = "Welcome in ToDo program. Please, enter Your name:"
-        self.view.display_text()
-        name = input()
-        self.user = User(name)
-        self.view.name = self.user.name
+        correct_choices = [str(num) for num in range(len(self.init_choices))]
+        self.view.menu_choices = self.init_choices
+        while True:
+            self.view.display_menu_choices()
+            self.view.display_custom_text("\n\n\n")
+            self.set_choice(correct_choices)
+            clear_screen()
+            if self.choice == "1":
+                self.view.text = "Please, enter Your name:"
+                self.view.display_text()
+                name = input()
+                self.user = User(name)
+                self.view.name = self.user.name
+                break
+            elif self.choice == "2":
+                self.user = self.load_user_profile()
+                self.view.name = self.user.name
+                self.view.text = ", User profile loaded."
+                self.view.display_name_and_text()
+                break
+            else:
+                self.view.display_credits()
+
         self.view.menu_choices = self.menu_choices
 
     def menu_loop(self):
         self.view.text = ", what do you want to do?"
         self.view.display_name_and_text()
         correct_choices = [str(num) for num in range(len(self.menu_choices))]
+        correct_choices.append("I")  # for "get task id by task name" option
+        correct_choices.append("S")  # for "save my profile" option
         while True:
             self.view.display_menu_choices()
             self.view.display_custom_text("\n\n\n")
-            self.set_choice(correct_choices, set_value=False)
+            self.set_choice(correct_choices)
             clear_screen()
             if self.choice == "1":
                 self.view.display_custom_text(self.user.get_all_my_tasks())
@@ -56,6 +107,10 @@ class Controller():
                 self.change_task_description()
             elif self.choice == "9":
                 self.remove_all_tasks()
+            elif self.choice == "I":
+                self.get_task_id_by_task_name()
+            elif self.choice == "S":
+                self.save_user_profile_to_file()
             elif self.choice == "0":
                 self.exit_program()
             pause()
@@ -129,17 +184,26 @@ class Controller():
         self.view.text = "tasks list is empty now"
         self.view.display_text()
 
+    def get_task_id_by_task_name(self):
+        if self.user.tasks.my_tasks:
+            self.view.text = ", please type task's name. I'll show You id number."
+            self.view.display_name_and_text()
+            _task_name = input()
+            _task_id = self.user.get_task_id_by_name(_task_name)
+            self.view.text = "Task id:\n\n" + _task_id
+            self.view.display_text()
 
     def take_task_id_from_user(self):
         self.view.display_custom_text(self.user.get_all_my_tasks())
         self.view.text = ", please choose task (by id number):"
         self.view.display_name_and_text()
         correct_choices = [str(x) for x in range(len(self.user.tasks.my_tasks))]
-        self.set_choice(correct_choices, set_value=False)
+        self.set_choice(correct_choices)
         task_id = int(self.choice)
         return task_id
 
     def get_info_about_completion_of_the_action(self):
+        clear_screen()
         self.view.text = "Done, updated tasks data:\n\n" + str(self.user.get_all_my_tasks())
         self.view.display_text()
 
@@ -147,40 +211,12 @@ class Controller():
         self.view.text = "There's no task to display, You should create a task first."
         self.view.display_text()
 
+    def save_user_profile_to_file(self):
+        with open('my_profile', 'wb') as output:
+            pickle.dump(self.user, output, pickle.HIGHEST_PROTOCOL)
+            self.view.text = "User profile saved."
+            self.view.display_text()
+
     def exit_program(self):
         self.view.say_goodbye()
         exit()
-
-    def set_choice(self, correct_choices=None, set_value=False):
-            """
-            Support User inputs.
-
-            Work in two modes:
-            1) correct choices:
-                when correct_choices is specified (list with available choices),
-                check if User input is in list, return correct input (string type).
-            2) set value mode:
-                if set_value is True:
-                    used to return float numbers
-                    check if user input is float
-                    returns input.
-            """
-            while True:
-                self.choice = input()
-                invalid_info = "incorrect choice, try again.."
-                # 1. mode (check if input in correct_choices):
-                if correct_choices:
-                    if self.choice in correct_choices:
-                        break
-                # 2. mode (check if input in correct_choices):
-                if set_value:
-                    try:
-                        self.choice = float(self.choice)
-                        if self.choice > 0:
-                            break
-                        else:
-                            self.view.display_simple_text("value should be positive number, try again..")
-                    except:
-                        self.view.display_simple_text(invalid_info)
-                else:
-                    self.view.display_simple_text(invalid_info)

@@ -12,12 +12,23 @@ class View():
         self.intro_text_1 = "\nLoading Program...\n\n"
         self.intro_text_2 = "\nJupi! Program loaded ^o^\n"
         self.menu_choices = []
-        self.excluded = "exit program"
+        self.excluded_1 = "get task id by task name"  # used to properly display menu
+        self.excluded_2 = "save my profile"  # used to properly display menu
+        self.excluded_3 = "exit program"  # used to properly display menu
+        self.excluded_4 = "About program"  # used to properly display initial menu
 
     def display_intro(self):
-        """Display simple intro."""
         mytools.clear_screen()
         mytools.display_text_with_asci_graphics(self.intro_text_1, self.intro_text_2)
+        mytools.pause()
+
+    @staticmethod
+    def display_credits():
+        mytools.clear_screen()
+        print("\n"*10)
+        __string = "ToDo MVC program by jq for a Codecool assignment.\
+                    \n27-10-2017 Cracow"
+        mytools.animate_string(string=__string)
         mytools.pause()
 
     def display_text(self):
@@ -37,11 +48,19 @@ class View():
         (3) ...
         """
         mytools.clear_screen()
-        self.display_custom_text(self.name + ", what do you want to do?")
+        if self.name:
+            self.display_custom_text(self.name + ", what do you want to do?")
+        else:
+            self.display_custom_text("Welcome in ToDo program. What do you want to do?")
         for number, choice in enumerate(self.menu_choices):
-            if choice != self.excluded:
+            if choice not in (self.excluded_1, self.excluded_2, self.excluded_3, self.excluded_4):
                 print("({}){:.>50}".format(number+1, choice))
-        print("({}){:.>50}".format(0, self.excluded))
+        if self.name:
+            print("({}){:.>50}".format('i', self.excluded_1))
+            print("({}){:.>50}".format('s', self.excluded_2))
+            print("({}){:.>50}".format(0, self.excluded_3))
+        else:
+            print("({}){:.>50}".format(0, self.excluded_4))
 
     def say_goodbye(self):
         mytools.clear_screen()
