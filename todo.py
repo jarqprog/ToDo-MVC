@@ -6,7 +6,6 @@ class ToDo():
 
     @classmethod
     def check_if_string_has_proper_length(cls, string, proper_length=20):
-        """Return bool."""
         string_length = len(string)
         if string_length <= proper_length:
             return True

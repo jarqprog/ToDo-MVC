@@ -13,13 +13,13 @@ class ToDoList():
         self.my_tasks.append(first_task)
 
     def __str__(self):
-        """Return content of my_items in string form (to display)."""
+        """Return content of my_tasks in string form (to display)."""
         description_length = 50
         head = ["id", "task name", "is done?", "short description"]
         body = [
                 [task.name, str(task.is_done), str(task.description[:description_length]+"...")]
                 for task in self.my_tasks]
-        return display_table_from_given_lists(head, body, bar_mark='-')
+        return display_table_from_given_lists(head, body, bar_mark='-')  # mytools function
 
     def add_task(self, name, description):
         task_to_add = ToDo(name, description)

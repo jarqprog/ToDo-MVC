@@ -6,6 +6,19 @@ import mytools
 class View():
     """Display varied info in terminal."""
 
+    @staticmethod
+    def display_credits():
+        mytools.clear_screen()
+        print("\n"*10)
+        __string = "ToDo MVC program by jq for a Codecool assignment.\
+                    \n27-10-2017 Cracow"
+        mytools.animate_string(string=__string)
+        mytools.pause()
+
+    @staticmethod
+    def display_custom_text(text):
+        print('\n\n' + text, '\n')
+
     def __init__(self):
         self.name = ""
         self.text = ""
@@ -22,15 +35,6 @@ class View():
         mytools.display_text_with_asci_graphics(self.intro_text_1, self.intro_text_2)
         mytools.pause()
 
-    @staticmethod
-    def display_credits():
-        mytools.clear_screen()
-        print("\n"*10)
-        __string = "ToDo MVC program by jq for a Codecool assignment.\
-                    \n27-10-2017 Cracow"
-        mytools.animate_string(string=__string)
-        mytools.pause()
-
     def display_text(self):
         print('\n\n' + self.text, '\n')
 
@@ -43,9 +47,11 @@ class View():
 
         Sample result:
         What do you want to do?
-        (1) Choice1
-        (2) Choice2
+        (1) choice from list
+        (2) another choice from list
         (3) ...
+
+        If 'name' wasn't specified (name = ''), method displays texts for initial part of program flow.
         """
         mytools.clear_screen()
         if self.name:
@@ -67,7 +73,3 @@ class View():
         print("\n"*10)
         __string = ("\nGoodbye, " + self.name + "!\n\n\nExit program...\n\n")
         mytools.animate_string(string=__string)
-
-    @staticmethod
-    def display_custom_text(text):
-        print('\n\n' + text, '\n')

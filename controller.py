@@ -10,11 +10,11 @@ import pickle
 class Controller():
     """Takes data from Model and View, affects both."""
 
-    init_choices = ["Start with new profile",
+    init_choices = ["Start with new profile",  # initial menu options
                     "Load profile",
                     "About program"]
 
-    menu_choices = ["display tasks",
+    menu_choices = ["display tasks",           # main menu options
                     "add task",
                     "remove task",
                     "mark task as done",
@@ -195,6 +195,18 @@ class Controller():
             _task_id = self.user.get_task_id_by_name(_task_name)
             self.view.text = "Task id:\n\n" + _task_id
             self.view.display_text()
+        else:
+            self.get_info_about_empty_tasks_list()
+
+    def save_user_profile_to_file(self):
+        with open('my_profile.save', 'wb') as output:
+            pickle.dump(self.user, output, pickle.HIGHEST_PROTOCOL)
+            self.view.text = "User profile saved."
+            self.view.display_text()
+
+    def exit_program(self):
+        self.view.say_goodbye()
+        exit()
 
     def take_task_id_from_user(self):
         self.view.display_custom_text(self.user.get_all_my_tasks())
@@ -213,13 +225,3 @@ class Controller():
     def get_info_about_empty_tasks_list(self):
         self.view.text = "There's no task to display, You should create a task first."
         self.view.display_text()
-
-    def save_user_profile_to_file(self):
-        with open('my_profile.save', 'wb') as output:
-            pickle.dump(self.user, output, pickle.HIGHEST_PROTOCOL)
-            self.view.text = "User profile saved."
-            self.view.display_text()
-
-    def exit_program(self):
-        self.view.say_goodbye()
-        exit()
