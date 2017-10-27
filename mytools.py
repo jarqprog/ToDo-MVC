@@ -1,9 +1,8 @@
-"""Module conatains varied helper functions."""
+"""Module contains varied helper functions."""
 
 import time
 import sys
 import os
-import random
 
 
 # import getch (avoid problem with windows/ubuntu):

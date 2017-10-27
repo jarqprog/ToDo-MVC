@@ -8,6 +8,7 @@ import pickle
 
 
 class Controller():
+    """Takes data from Model and View, affects both."""
 
     init_choices = ["Start with new profile",
                     "Load profile",
@@ -47,7 +48,7 @@ class Controller():
 
     @classmethod
     def load_user_profile(cls):
-        with open('my_profile', 'rb') as input:
+        with open('my_profile.save', 'rb') as input:
             user = pickle.load(input)
             return user
 
@@ -55,6 +56,7 @@ class Controller():
         self.view.display_intro()
         correct_choices = [str(num) for num in range(len(self.init_choices))]
         self.view.menu_choices = self.init_choices
+        # initial menu (new profile, load profile, credits)
         while True:
             self.view.display_menu_choices()
             self.view.display_custom_text("\n\n\n")
@@ -79,6 +81,7 @@ class Controller():
         self.view.menu_choices = self.menu_choices
 
     def menu_loop(self):
+        """Execute main menu."""
         self.view.text = ", what do you want to do?"
         self.view.display_name_and_text()
         correct_choices = [str(num) for num in range(len(self.menu_choices))]
@@ -212,7 +215,7 @@ class Controller():
         self.view.display_text()
 
     def save_user_profile_to_file(self):
-        with open('my_profile', 'wb') as output:
+        with open('my_profile.save', 'wb') as output:
             pickle.dump(self.user, output, pickle.HIGHEST_PROTOCOL)
             self.view.text = "User profile saved."
             self.view.display_text()
