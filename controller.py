@@ -1,7 +1,7 @@
 """Controller in MVC structure."""
 
 from user import User
-from view import View, Menu, Intro, Outro, MenuOption
+from view import View, Menu, MenuOption, Other
 from mytools import pause
 from mytools import clear_screen
 import data
@@ -11,14 +11,14 @@ import pickle
 class Controller():
     """Takes data from Model and View, affects both."""
 
-    intro_texts = data.intro_texts
+    menu_views = {}  # will contains views for both menus: init and main
+    option_views = {}  # will contain views for options in both menus
+    other_views = {}
     # data for views creation:
-    my_menus_data = data.my_menus
     init_choices_data = data.init_choices
-    menu_choices_data = data.menu_choices
-
-    option_views = {}  # will contain views for menu options
-    menu_views = {}  # will contains views for initial and main menu
+    main_choices_data = data.main_choices
+    other_views_data = data.other_views_data
+    my_menus_data = data.my_menus
 
     @classmethod
     def set_choice(cls, correct_choices):
@@ -57,10 +57,15 @@ class Controller():
                                         is_main=cls.my_menus_data[menu][2])
 
     @classmethod
+    def set_my_others_views(cls):
+        for other in cls.other_views_data:
+            cls.other_views[other] = Other(cls.other_views_data[other])
+
+    @classmethod
     def set_my_all_views(cls):
-        """Create list of all views."""
-        for choice in choices:
-            pass
+        cls.set_my_init_option_views()
+        cls.set_my_menu_views()
+        cls.set_my_others_views()
 
     @classmethod
     def get_proper_option_view(cls, need_view_for):
@@ -75,20 +80,27 @@ class Controller():
                 return cls.menu_views[view]
 
     @classmethod
+    def get_proper_other_view(cls, need_view_for):
+        for view in cls.other_views:
+            if view == need_view_for:
+                return cls.other_views[view]
+
+    @classmethod
     def set_my_views_name(cls, name):
         for view in cls.menu_views:
             cls.menu_views[view].set_name(name)
         for view in cls.option_views:
             cls.option_views[view].set_name(name)
+        for view in cls.other_views:
+            cls.other_views[view].set_name(name)
 
     def __init__(self):
-        intro = Intro(self.intro_texts)
-        self.set_my_menu_views()
-        self.set_my_init_option_views()
+        self.set_my_all_views()
+        intro = self.get_proper_other_view("intro")
+        print(type(intro))
         init_menu = self.get_proper_menu_view("init")
-        # initial menu (new profile, load profile, credits)
         correct_choices = [str(num) for num in range(len(self.init_choices_data))]
-        intro.display()
+        intro.display_intro()
         while True:
             init_menu.display()
             self.set_choice(correct_choices)
@@ -113,17 +125,17 @@ class Controller():
 
     def menu_loop(self):
         """Execute main menu."""
-        main_menu = self.get_proper_menu_view("menu")
+        main_menu = self.get_proper_menu_view("main")
         main_menu.display_name_and_text(text=", what do you want to do?")
-        correct_choices = [str(num) for num in range(len(self.menu_choices_data))]
+        correct_choices = [str(num) for num in range(len(self.main_choices_data))]
         correct_choices.append("I")  # for "get task id by task name" option
         correct_choices.append("S")  # for "save my profile" option
         while True:
             main_menu.display()
             self.set_choice(correct_choices)
-            pause()
             if self.choice == "1":
-                self.view.display_custom_text(self.user.get_all_my_tasks())
+                display_tasks = self.get_proper_menu_view("display tasks")
+                display_tasks.display_custom_text(self.user.get_all_my_tasks())
             elif self.choice == "2":
                 self.add_new_task()
             elif self.choice == "3":
@@ -145,10 +157,12 @@ class Controller():
             elif self.choice == "S":
                 self.save_user_profile_to_file()
             elif self.choice == "0":
-                self.exit_program()
+                outro = self.get_proper_other_view("outro")
+                outro.display_outro()
+                exit()
             pause()
 
-    def add_new_task(self):
+    def add_new_task(self, add_new_task):
         self.view.text = ", please type task's name (max 20 chars)."
         self.view.display_name_and_text()
         _name = input()
@@ -233,10 +247,6 @@ class Controller():
             pickle.dump(self.user, output, pickle.HIGHEST_PROTOCOL)
             self.view.text = "User profile saved."
             self.view.display_text()
-
-    def exit_program(self):
-        self.view.say_goodbye()
-        exit()
 
     def take_task_id_from_user(self):
         self.view.display_custom_text(self.user.get_all_my_tasks())

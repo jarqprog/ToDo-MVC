@@ -1,23 +1,4 @@
-"""Contains data for controller."""
-
-
-        #
-        # self.intro_text_1 = "\nLoading Program...\n\n"
-        # self.intro_text_2 = "\nJupi! Program loaded ^o^\n"
-        # self.menu_choices = []
-        # self.excluded_1 = "get task id by task name"  # used to properly display menu
-        # self.excluded_2 = "save my profile"  # used to properly display menu
-        # self.excluded_3 = "exit program"  # used to properly display menu
-        # self.excluded_4 = "About program"  # used to properly display initial menu
-
-
-
-
-#                     choices=self.init_choices,
-#                     special_choices={"0": "About program"},
-#                     is_main=False)
-#
-intro_texts = ["\nLoading Program...\n\n", "\nJupi! Program loaded ^o^\n"]
+"""Contains data for controller, used to creating views."""
 
 # initial menu options
 init_choices = {"Start with new profile":
@@ -29,11 +10,17 @@ init_choices = {"Start with new profile":
                             \n27-10-2017 Cracow"]
                 }
 
-
-menu_choices = {"display tasks",           # main menu options
-                "add task",
-                "remove task",
-                "mark task as done",
+#
+main_choices = {"display tasks":
+                [""],
+                "add task":
+                [
+                    ", please type task's name (max 20 chars).",
+                    ", please type task's description (max 150 chars)."],
+                "remove task":
+                ["tasks list is empty now"],
+                "mark task as done":
+                ,
                 "mark task as todo",
                 "display task description",
                 "change task name",
@@ -41,20 +28,43 @@ menu_choices = {"display tasks",           # main menu options
                 "remove all tasks",
                 "get task id by task name",
                 "save my profile",
-                "exit program"}
+                "exit program"]
+
+# {"display tasks":
+# #                 ,           # main menu options self.user.get_all_my_tasks()
+# #                 "add task",
+# #                 "remove task",
+# #                 "mark task as done",
+# #                 "mark task as todo",
+# #                 "display task description",
+# #                 "change task name",
+# #                 "change task description",
+# #                 "remove all tasks",
+# #                 "get task id by task name",
+# #                 "save my profile",
+# #                 "exit program"}
+
+other_views_data = {
+                "intro":
+                ["\nLoading Program...\n\n", "\nJupi! Program loaded ^o^\n"],
+                "outro":
+                [", goodbye!\n\n\nExit program...\n\n"],
+                "helper":
+                ["I'm just helper view ;)"],
+                "succes":
+                ["Done, updated tasks data:\n\n"],
+                "failure":
+                ["There's no task to display, You should create a task first."]}
 
 my_menus = {"init":
             [[choice for choice in init_choices.keys()],
                 {"0": "About program"},
                 False],
-            "menu":
-            [menu_choices,
-                {"0": "About program"},
+            "main":
+            [main_choices,
+                {
+                    "i": "get task id by task name",
+                    "s": "save my profile",
+                    "0": "exit program"},
                 True]
             }
-
-
-
-        # self.excluded_1 = "get task id by task name"  # used to properly display menu
-        # self.excluded_2 = "save my profile"  # used to properly display menu
-        # self.excluded_3 = "exit program"  # used to properly display menu

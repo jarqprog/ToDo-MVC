@@ -10,14 +10,11 @@ class View():
     text = ""
     texts = ["", ""]
 
-    @staticmethod
-    def display_credits():
-        mytools.clear_screen()
-        print("\n"*10)
-        __string = ("\n"*10) + "ToDo MVC program by jq for a Codecool assignment.\
-                    \n27-10-2017 Cracow"
-        mytools.animate_string(string=__string)
-        mytools.pause()
+    def set_text(self, text):
+        self.text = text
+
+    def set_name(self, name):
+        self.name = name
 
     @staticmethod
     def display_custom_text(text, animating=False):
@@ -27,12 +24,6 @@ class View():
         else:
             print(_string)
 
-    def set_text(self, text):
-        self.text = text
-
-    def set_name(self, name):
-        self.name = name
-
     def display_text(self, animating=False):
         _string = '\n\n' + self.text + '\n'
         if animating:
@@ -41,7 +32,7 @@ class View():
             print(_string)
 
     def display_choosen_text_from_my_texts(self, chosen_index=0, animating=False):
-        _string = '\n\n' + self.texts[chosen_index] + '\n\n\n'
+        _string = '\n\n\n' + self.texts[chosen_index] + '\n\n\n'
         if animating:
             mytools.animate_string(string=_string)
         else:
@@ -62,23 +53,6 @@ class View():
             except:
                 print("Missed second text..")
                 mytools.pause()
-
-
-class Intro(View):
-
-    def __init__(self, texts):
-        self.texts = texts
-
-    def display(self):
-        mytools.clear_screen()
-        self.display_graphics()
-        mytools.pause()
-
-
-class Outro(View):
-
-    def __init__(self, outro_text):
-        self.outro_text = outro_text
 
 
 class Menu(View):
@@ -106,3 +80,18 @@ class MenuOption(View):
 
     def __init__(self, texts):
         self.texts = texts
+
+
+class Other(View):
+
+    def __init__(self, texts):
+        self.texts = texts
+
+    def display_intro(self):
+        mytools.clear_screen()
+        self.display_graphics()
+        mytools.pause()
+
+    def display_outro(self):
+        mytools.clear_screen()
+        self.display_name_and_text(text=self.texts[0], animating=True)
