@@ -1,14 +1,18 @@
-"""Module contains class associated with the display in terminal."""
+"""View in MVC architecture."""
 
 import mytools
 
 
 class View():
-    """Display varied info in terminal."""
+    """Parent class. Views are used to display info in terminal."""
 
     name = ""
     text = ""
     texts = ["", ""]
+    uid = "Parent"
+
+    def __str__(self):
+        return self.uid
 
     def set_text(self, text):
         self.text = text
@@ -18,28 +22,27 @@ class View():
 
     @staticmethod
     def display_custom_text(text, animating=False):
-        _string = '\n\n' + text + '\n'
+        _string = '\n' + text + '\n\n'
         if animating:
             mytools.animate_string(string=_string)
         else:
             print(_string)
 
-    def display_text(self, animating=False):
-        _string = '\n\n' + self.text + '\n'
+    def display_text_from_my_texts(self, name=False, chosen_index=0, animating=False):
+        if name:
+            _string = '\n' + self.name + ', ' + self.texts[chosen_index] + '\n\n'
+        else:
+            _string = '\n' + self.texts[chosen_index] + '\n\n'
         if animating:
             mytools.animate_string(string=_string)
         else:
             print(_string)
 
-    def display_choosen_text_from_my_texts(self, chosen_index=0, animating=False):
-        _string = '\n\n\n' + self.texts[chosen_index] + '\n\n\n'
-        if animating:
-            mytools.animate_string(string=_string)
+    def display_text(self, name=False, text="", animating=False):
+        if name:
+            _string = '\n' + self.name + self.text + text + '\n\n'
         else:
-            print(_string)
-
-    def display_name_and_text(self, text="", animating=False):
-        _string = '\n\n' + self.name + self.text + text + '\n'
+            _string = '\n' + self.text + text + '\n\n'
         if animating:
             mytools.animate_string(string=_string)
         else:
@@ -56,8 +59,10 @@ class View():
 
 
 class Menu(View):
+    """Views used to display menus."""
 
-    def __init__(self, choices, special_choices={}, is_main=False):
+    def __init__(self, uid, choices, special_choices={}, is_main=False):
+        self.uid = uid
         self.choices = choices
         self.special_choices = special_choices  # choices that have own symbols in menu
         self.is_main = is_main  # bool, if True: display main menu, else: display initial menu
@@ -74,24 +79,25 @@ class Menu(View):
 
         for choice in self.special_choices:
             print("({}){:.>50}".format(choice, self.special_choices[choice]))
+        print("\n")
 
 
 class MenuOption(View):
+    """Views used to display menu options."""
 
-    def __init__(self, texts):
+    def __init__(self, uid, texts):
+        self.uid = uid
         self.texts = texts
 
 
 class Other(View):
+    """Views used to display info in varied situations."""
 
-    def __init__(self, texts):
+    def __init__(self, uid, texts):
+        self.uid = uid
         self.texts = texts
 
     def display_intro(self):
         mytools.clear_screen()
         self.display_graphics()
         mytools.pause()
-
-    def display_outro(self):
-        mytools.clear_screen()
-        self.display_name_and_text(text=self.texts[0], animating=True)

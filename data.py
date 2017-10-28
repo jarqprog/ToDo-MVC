@@ -10,51 +10,46 @@ init_choices = {"Start with new profile":
                             \n27-10-2017 Cracow"]
                 }
 
-#
+
 main_choices = {"display tasks":
                 [""],
                 "add task":
                 [
-                    ", please type task's name (max 20 chars).",
-                    ", please type task's description (max 150 chars)."],
+                    "please type task's name (max 20 chars).",
+                    "please type task's description (max 150 chars)."],
                 "remove task":
                 ["tasks list is empty now"],
                 "mark task as done":
-                ,
-                "mark task as todo",
-                "display task description",
-                "change task name",
-                "change task description",
-                "remove all tasks",
-                "get task id by task name",
-                "save my profile",
-                "exit program"]
-
-# {"display tasks":
-# #                 ,           # main menu options self.user.get_all_my_tasks()
-# #                 "add task",
-# #                 "remove task",
-# #                 "mark task as done",
-# #                 "mark task as todo",
-# #                 "display task description",
-# #                 "change task name",
-# #                 "change task description",
-# #                 "remove all tasks",
-# #                 "get task id by task name",
-# #                 "save my profile",
-# #                 "exit program"}
+                [""],
+                "mark task as todo":
+                [""],
+                "display task description":
+                [""],
+                "change task name":
+                ["please type new task's name (max 20 chars)."],
+                "change task description":
+                ["please type task's description (max 150 chars)."],
+                "remove all tasks":
+                ["tasks list is empty now"],
+                "get task id by task name":
+                ["please type task's name. I'll show You id number."],
+                "save my profile":
+                ["User profile saved."],
+                "exit program":
+                ["goodbye!\n\nExit program...\n\n"]
+                }
 
 other_views_data = {
                 "intro":
                 ["\nLoading Program...\n\n", "\nJupi! Program loaded ^o^\n"],
-                "outro":
-                [", goodbye!\n\n\nExit program...\n\n"],
-                "helper":
-                ["I'm just helper view ;)"],
+                "take task id":
+                ["please choose task (by id number):"],
                 "succes":
-                ["Done, updated tasks data:\n\n"],
+                ["Done, updated tasks data:\r\r"],
                 "failure":
-                ["There's no task to display, You should create a task first."]}
+                ["There's no task to display, You should create a task first."],
+                "set choice":
+                ["incorrect choice, try again.."]}
 
 my_menus = {"init":
             [[choice for choice in init_choices.keys()],
