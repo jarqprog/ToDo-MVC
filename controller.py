@@ -1,33 +1,24 @@
 """Controller in MVC structure."""
 
 from user import User
-from view import View
+from view import View, Menu, Intro, Outro, MenuOption
 from mytools import pause
 from mytools import clear_screen
+import data
 import pickle
 
 
 class Controller():
     """Takes data from Model and View, affects both."""
 
-    init_choices = ["Start with new profile",  # initial menu options
-                    "Load profile",
-                    "About program"]
+    intro_texts = data.intro_texts
+    # data for views creation:
+    my_menus_data = data.my_menus
+    init_choices_data = data.init_choices
+    menu_choices_data = data.menu_choices
 
-    menu_choices = ["display tasks",           # main menu options
-                    "add task",
-                    "remove task",
-                    "mark task as done",
-                    "mark task as todo",
-                    "display task description",
-                    "change task name",
-                    "change task description",
-                    "remove all tasks",
-                    "get task id by task name",
-                    "save my profile",
-                    "exit program"]
-
-    view = View()
+    option_views = {}  # will contain views for menu options
+    menu_views = {}  # will contains views for initial and main menu
 
     @classmethod
     def set_choice(cls, correct_choices):
@@ -52,46 +43,85 @@ class Controller():
             user = pickle.load(input)
             return user
 
+    @classmethod
+    def set_my_init_option_views(cls):
+        for option in cls.init_choices_data:
+            cls.option_views[option] = MenuOption(cls.init_choices_data[option])
+
+    @classmethod
+    def set_my_menu_views(cls):
+        for menu in cls.my_menus_data:
+            cls.menu_views[menu] = Menu(
+                                        choices=cls.my_menus_data[menu][0],
+                                        special_choices=cls.my_menus_data[menu][1],
+                                        is_main=cls.my_menus_data[menu][2])
+
+    @classmethod
+    def set_my_all_views(cls):
+        """Create list of all views."""
+        for choice in choices:
+            pass
+
+    @classmethod
+    def get_proper_option_view(cls, need_view_for):
+        for view in cls.option_views:
+            if view == need_view_for:
+                return cls.option_views[view]
+
+    @classmethod
+    def get_proper_menu_view(cls, need_view_for):
+        for view in cls.menu_views:
+            if view == need_view_for:
+                return cls.menu_views[view]
+
+    @classmethod
+    def set_my_views_name(cls, name):
+        for view in cls.menu_views:
+            cls.menu_views[view].set_name(name)
+        for view in cls.option_views:
+            cls.option_views[view].set_name(name)
+
     def __init__(self):
-        self.view.display_intro()
-        correct_choices = [str(num) for num in range(len(self.init_choices))]
-        self.view.menu_choices = self.init_choices
+        intro = Intro(self.intro_texts)
+        self.set_my_menu_views()
+        self.set_my_init_option_views()
+        init_menu = self.get_proper_menu_view("init")
         # initial menu (new profile, load profile, credits)
+        correct_choices = [str(num) for num in range(len(self.init_choices_data))]
+        intro.display()
         while True:
-            self.view.display_menu_choices()
-            self.view.display_custom_text("\n\n\n")
+            init_menu.display()
             self.set_choice(correct_choices)
             clear_screen()
             if self.choice == "1":
-                self.view.text = "Please, enter Your name:"
-                self.view.display_text()
+                view = self.get_proper_option_view("Start with new profile")
+                view.display_choosen_text_from_my_texts(animating=True)
                 name = input()
                 self.user = User(name)
-                self.view.name = self.user.name
                 break
             elif self.choice == "2":
                 self.user = self.load_user_profile()
-                self.view.name = self.user.name
-                self.view.text = ", User profile loaded."
-                self.view.display_name_and_text()
+                view = self.get_proper_option_view("Load profile")
+                view.display_custom_text(text=self.user.name + ", User profile loaded.", animating=True)
                 break
             else:
-                self.view.display_credits()
+                view = self.get_proper_option_view("About program")
+                view.display_choosen_text_from_my_texts(animating=True)
+                pause()
 
-        self.view.menu_choices = self.menu_choices
+        self.set_my_views_name(self.user.name)
 
     def menu_loop(self):
         """Execute main menu."""
-        self.view.text = ", what do you want to do?"
-        self.view.display_name_and_text()
-        correct_choices = [str(num) for num in range(len(self.menu_choices))]
+        main_menu = self.get_proper_menu_view("menu")
+        main_menu.display_name_and_text(text=", what do you want to do?")
+        correct_choices = [str(num) for num in range(len(self.menu_choices_data))]
         correct_choices.append("I")  # for "get task id by task name" option
         correct_choices.append("S")  # for "save my profile" option
         while True:
-            self.view.display_menu_choices()
-            self.view.display_custom_text("\n\n\n")
+            main_menu.display()
             self.set_choice(correct_choices)
-            clear_screen()
+            pause()
             if self.choice == "1":
                 self.view.display_custom_text(self.user.get_all_my_tasks())
             elif self.choice == "2":
