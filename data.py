@@ -1,6 +1,5 @@
 """Contains data for controller, used to creating views."""
 
-# initial menu options
 init_choices = {"Start with new profile":
                 ["Please, enter Your name:"],
                 "Load profile":

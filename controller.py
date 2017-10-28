@@ -11,9 +11,9 @@ import pickle
 class Controller():
     """Takes data from Model and View, affects both."""
 
-    menu_views = {}  # will contains Views for both menus: init and main
-    option_views = {}  # will contain Views for options in both menus
-    other_views = {}
+    menu_views = {}  # contains Views for both menus: init and main
+    option_views = {}  # contains Views for options in both menus
+    other_views = {}  # contains additional Views
     # data for Views creation:
     init_choices_data = data.init_choices
     main_choices_data = data.main_choices
@@ -117,7 +117,7 @@ class Controller():
                 self.option_views["About program"].display_text_from_my_texts()
                 pause()
 
-        self.set_my_views_name(self.user.name)  # all views can use user name now
+        self.set_my_views_name(self.user.name)  # all views can use User name now
 
     def menu_loop(self):
         """Execute main menu."""

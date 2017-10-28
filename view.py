@@ -14,11 +14,17 @@ class View():
     def __str__(self):
         return self.uid
 
+    def set_name(self, name):
+        self.name = name
+
     def set_text(self, text):
         self.text = text
 
-    def set_name(self, name):
-        self.name = name
+    def set_texts(self, texts):
+        self.texts = texts
+
+    def set_uid(self, uid):
+        self.uid = uid
 
     @staticmethod
     def display_custom_text(text, animating=False):
