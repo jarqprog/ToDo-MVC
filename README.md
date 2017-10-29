@@ -11,5 +11,5 @@ Controller takes data from Model, creates own Views (using data module) for vari
 Controller takes input from User, affects on Model and calls specific View to display result in terminal.
 
 Start program with main.py file.
-------------
+
 Have fun, jq
