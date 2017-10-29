@@ -6,8 +6,8 @@ User can create, modify tasks and save them to file as user profile (save all us
 Works in terminal.
 
 MVC pattern:
-  controller takes data from Model, creates own Views (using data module) for varied User actions.
-  controller takes input from User, affects on Model and calls specific View to display result in terminal.
+  \ncontroller takes data from Model, creates own Views (using data module) for varied User actions.
+  \ncontroller takes input from User, affects on Model and calls specific View to display result in terminal.
 
 Start program with main.py file.
 ------------
