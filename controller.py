@@ -15,10 +15,10 @@ class Controller():
     option_views = {}  # contains Views for options in both menus
     other_views = {}  # contains additional Views
     # data for Views creation:
-    init_choices_data = data.init_choices
-    main_choices_data = data.main_choices
-    other_views_data = data.other_views_data
-    my_menus_data = data.my_menus
+    menu_data = data.menu
+    init_options_data = data.init_options
+    main_options_data = data.main_options
+    other_options_data = data.other_options
 
     @staticmethod
     def take_input_from_user_clear_screen():
@@ -53,7 +53,7 @@ class Controller():
     @classmethod
     def set_init_option_views(cls):
         """Create Views used in initial menu, collect them in dictionary."""
-        for option in cls.init_choices_data:
+        for option in cls.init_options_data:
             cls.option_views[option] = MenuOption(option, cls.init_choices_data[option])
 
     @classmethod
@@ -87,8 +87,7 @@ class Controller():
         cls.set_others_views()
 
     @classmethod
-    def set_my_views_name(cls, name):
-        """Set name for all Views."""
+    def set_name_for_views(cls, name):
         for view in cls.menu_views:
             cls.menu_views[view].set_name(name)
         for view in cls.option_views:
@@ -117,11 +116,10 @@ class Controller():
                 self.option_views["About program"].display_text_from_my_texts()
                 pause()
 
-        self.set_my_views_name(self.user.name)  # all views can use User name now
+        self.set_name_for_views(self.user.name)  # all views have acces to User name now
 
     def menu_loop(self):
         """Execute main menu."""
-        # get views for varied option:
         _correct_choices = [str(num) for num in range(len(self.main_choices_data))]
         _correct_choices.append("I")  # for "get task id by task name" option
         _correct_choices.append("S")  # for "save my profile" option

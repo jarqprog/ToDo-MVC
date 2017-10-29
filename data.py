@@ -1,6 +1,6 @@
 """Contains data for controller, used to creating views."""
 
-init_choices = {"Start with new profile":
+init_options = {"Start with new profile":
                 ["Please, enter Your name:"],
                 "Load profile":
                 [", User profile loaded."],
@@ -10,7 +10,7 @@ init_choices = {"Start with new profile":
                 }
 
 
-main_choices = {"display tasks":
+main_options = {"display tasks":
                 [""],
                 "add task":
                 [
@@ -38,7 +38,7 @@ main_choices = {"display tasks":
                 ["goodbye!\n\nExit program...\n\n"]
                 }
 
-other_views_data = {
+other_options = {
                 "intro":
                 ["\nLoading Program...\n\n", "\nJupi! Program loaded ^o^\n"],
                 "take task id":
@@ -50,15 +50,15 @@ other_views_data = {
                 "set choice":
                 ["incorrect choice, try again.."]}
 
-my_menus = {"init":
-            [[choice for choice in init_choices.keys()],
-                {"0": "About program"},
-                False],
-            "main":
-            [main_choices,
-                {
-                    "i": "get task id by task name",
-                    "s": "save my profile",
-                    "0": "exit program"},
-                True]
+menu = {
+                "init": [
+                        init_options,
+                        {"0": "About program"},
+                        False],
+                "main": [
+                        main_options,
+                        {"i": "get task id by task name",
+                            "s": "save my profile",
+                            "0": "exit program"},
+                        True]
             }
