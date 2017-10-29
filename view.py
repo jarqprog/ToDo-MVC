@@ -68,9 +68,9 @@ class Menu(View):
     """Views used to display menus."""
 
     def __init__(self, uid, choices, special_choices={}, is_main=False):
-        self.uid = uid
-        self.choices = choices
-        self.special_choices = special_choices  # choices that have own symbols in menu
+        self.uid = uid  # string type
+        self.choices = choices  # list type
+        self.special_choices = special_choices  # dict type, choices that have own symbols in menu
         self.is_main = is_main  # bool, if True: display main menu, else: display initial menu
 
     def display(self):

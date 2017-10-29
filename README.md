@@ -7,9 +7,13 @@ Works in terminal.
 
 MVC pattern:
 
-Controller takes data from Model, creates own Views (using data module) for varied User actions.
-Controller takes input from User, affects on Model and calls specific View to display result in terminal.
+Controller takes data from Model, creates own Views (using data module) for varied User actions,
+collects Views instances in dictionary.
 
-Start program with main.py file.
+Controller takes input from User, affects on Model and calls specific View (from dictionary)
+to display result in terminal.
+
+Old program version in branch version_1 - presents different approach (one View for all User actions, takes
+various arguments to display changes).
 
 Have fun, jq

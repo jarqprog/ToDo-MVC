@@ -1,4 +1,4 @@
-"""Contains data for controller, used to creating views."""
+"""Contains data for Controller, used to create Views."""
 
 init_options = {"Start with new profile":
                 ["Please, enter Your name:"],

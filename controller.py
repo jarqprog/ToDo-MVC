@@ -11,9 +11,7 @@ import pickle
 class Controller():
     """Takes data from Model and View, affects both."""
 
-    views = {}  # contains Views for both menus: init and main
-    # views = {}  # contains Views for options in both menus
-    # views = {}  # contains additional Views
+    views = {}
     # data for Views creation:
     menu_data = data.menu
     init_options_data = data.init_options
@@ -65,7 +63,6 @@ class Controller():
                                         choices=cls.menu_data[menu][0],
                                         special_choices=cls.menu_data[menu][1],
                                         is_main=cls.menu_data[menu][2])
-
 
     @classmethod
     def set_name_for_views(cls, name):
