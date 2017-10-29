@@ -1,4 +1,4 @@
-ToDo-MVC
+ToDo-MVC v2.0
 
 ------------
 Program made to manage tasks in MVC pattern for a school assignment.
